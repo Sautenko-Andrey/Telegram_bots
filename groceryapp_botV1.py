@@ -72,12 +72,15 @@ def get_city(message) -> str:
     bot.send_message(message.chat.id, "Оберіть маркет", reply_markup=markup)
 
     # регистрируем и вызываем следующую функцию для выбора маркетов
-    bot.register_next_step_handler(message, get_markets)
+    #bot.register_next_step_handler(message, get_markets)
 
     return city
 
-def get_markets(message):
-    bot.send_message(message.chat.id, "lallalaallalal")
+@bot.callback_query_handler(func=lambda call: True)
+def callback(call):
+
+    market = call.data
+    bot.send_message(call.message.chat.id, f"Ти обрав {market}")
 
 
 
