@@ -9,8 +9,6 @@ from keras_preprocessing.sequence import pad_sequences
 from keras.models import load_model
 
 from beer_bot_utils import *
-# from .items_full_names import *
-# from my_app.utils import RefersForRNN
 
 
 class ExecutorRNN:
@@ -23,7 +21,6 @@ class ExecutorRNN:
     def prepearing_data(self):
         '''Подготавливаем текст'''
         get_text_data = RefersForRNN()
-        #texts = get_text_data.get_text()[0]
         texts = get_text_data.get_text_from_DB()[0]
         return texts
 
@@ -46,9 +43,7 @@ class ExecutorRNN:
     def identify_item(self, user_text):
 
         # загружаем обученную модель НС для распознования товара по тексту:
-        #model = load_model('/home/andrey/GroceryAppVol3/FBApp/my_app/my_model_text')
         model = load_model("./beer_bot_model_text")
-
 
         # переводим пользовательский запрос в нижний регистр:
         user_text = user_text.lower()
@@ -68,21 +63,23 @@ class ExecutorRNN:
         print(result, np.argmax(result), sep='\n')
         if np.argmax(result) == 0:
             return "Пиво 5.0 Original Lager светлое 0.5 в ж.б"
-        elif np.argmax(result)==1:
+        elif np.argmax(result) == 1:
             return "Пиво 5.0 Original pills светлое 0,5 л в банке"
-        elif np.argmax(result)==2:
+        elif np.argmax(result) == 2:
             return "Пиво 5.0 original weiss нефильтрованное светлое 0,5 л в банке"
         if np.argmax(result) == 3:
             return "Пиво 5.0 origin craft beer нефильтрованное светлое 0,5 л в банке"
-        elif np.argmax(result)==4:
+        elif np.argmax(result) == 4:
             return "Пиво amstel светлое 0,5 л в бутылке"
-        elif np.argmax(result)==5:
+        elif np.argmax(result) == 5:
             return "Пиво amstel светлое 0,5 л в банке"
         if np.argmax(result) == 6:
             return "Пиво арсенал крепкое 0,5 л в бутылке"
-        elif np.argmax(result)==7:
+        elif np.argmax(result) == 7:
             return "Пиво арсенал крепкое светлое 2 л в бутылке"
-        elif np.argmax(result)==8:
+        elif np.argmax(result) == 8:
             return "Пиво bavaria гранат безалкогольное светлое 0,5 л в банке"
-        elif np.argmax(result)==9:
+        elif np.argmax(result) == 9:
             return "Пиво bavaria liquid apple светлое безалкогольное 0,5 л в банке"
+        else:
+            return "Вибач, але я не знайшов твоє пиво..."

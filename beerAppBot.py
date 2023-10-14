@@ -3,6 +3,19 @@ from telebot import types
 from tokens import beer_bot_token as my_token
 
 from beerRNN_executor import ExecutorRNN
+from beer_full_names import *
+from beer_bot_utils import GetBeerData
+
+import pymongo
+
+# #установим соединение с Mongo DB
+# db_client = pymongo.MongoClient("mongodb://localhost:27017/")
+# #подключаемся к БД, если ее нет, то она будет создана
+# current_db = db_client["products_db"]
+# #создаем коллекцию beers
+# beers_collection = current_db["beers"]
+# for item in beers_collection.find():
+#     print(item)
 
 bot = telebot.TeleBot(my_token.token)
 
@@ -28,12 +41,6 @@ def request_executor(call):
     #получаем способ поиска пива
     mode = call.data
 
-    #выполним проверку способа поиска
-    # if mode != "search_by_text" and mode != "search_by_img":
-    #     bot.send_message(call.message.chat.id, "Оберіть способ пошуку, натиснувши одну з двох кнопок")
-    #     bot.register_next_step_handler(call.message, start_Bot)
-
-
     respond = "пошук за назвою пива" if mode == "search_by_text" else "пошук пива по фото"
 
     #отправим подтверждение запроса пользователю
@@ -48,11 +55,18 @@ def request_executor(call):
         bot.register_next_step_handler(call.message, cnn_executor)
 
 
+def open_send_img(message, path):
+    """Метод открывает и отправляет изображения пользователю"""
+
+    with open(path, "rb") as file:
+        bot.send_photo(message.chat.id, file)
+
 
 def rnn_executor(message):
     """Рекурентная НС для обработки текста"""
 
     #получаем запрос пользователя на пиво
+
     user_beer_request = message.text.strip()
 
     bot.send_message(message.chat.id, f"Запит на пошук 📍{user_beer_request}📍 прийнят. Починаємо пошук!")
@@ -66,38 +80,7 @@ def rnn_executor(message):
                                       f"Це : {result}")
 
     #отправляем пользователю картинку с его пивом
-    if result == "Пиво 5.0 Original Lager светлое 0.5 в ж.б":
-        with open("../beerBot_DATA/pics/beer_5_0_original_lager__svitle_0_5_l_jb.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво 5.0 Original pills светлое 0,5 л в банке":
-        with open("../beerBot_DATA/pics/5_0_original_pils_svitle_0_5_jb.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво 5.0 original weiss нефильтрованное светлое 0,5 л в банке":
-        with open("../beerBot_DATA/pics/5_0_original_weiss_beer_0_5_jb.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво 5.0 origin craft beer нефильтрованное светлое 0,5 л в банке":
-        with open("../beerBot_DATA/pics/5_0_original_craft_0_5_jb.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво amstel светлое 0,5 л в бутылке":
-        with open("../beerBot_DATA/pics/amstel_svitle_0_5_glass.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво amstel светлое 0,5 л в банке":
-        with open("../beerBot_DATA/pics/amstel_svitle_0_5_jb.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво арсенал крепкое 0,5 л в бутылке":
-        with open("../beerBot_DATA/pics/arsenal_micne_05_glass.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво арсенал крепкое светлое 2 л в бутылке":
-        with open("../beerBot_DATA/pics/arsenal_micne_2L_pl.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво bavaria гранат безалкогольное светлое 0,5 л в банке":
-        with open("../beerBot_DATA/pics/bavaria_granat_bezalk_svetl_05jb.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-    elif result == "Пиво bavaria liquid apple светлое безалкогольное 0,5 л в банке":
-        with open("../beerBot_DATA/pics/bavaria_liquid_apple_svitle_bezalk_05_jb.png", "rb") as file:
-            bot.send_photo(message.chat.id, file)
-
-
+    open_send_img(message,GetBeerData(result).send_data())
 
 
 
