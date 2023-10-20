@@ -20,7 +20,7 @@ class RNN_beerBot:
     __slots__ = ("model")
 
     # опредедяем количество наиболее употребляемых слов в тексте запроса пользователя
-    MAX_WORDS = 1000
+    MAX_WORDS = 2000
 
     # определяем количество слов, к которому дуте приведен каждый запрос от пользователя
     MAX_LENGTH_TEXT = 10
@@ -49,7 +49,7 @@ class RNN_beerBot:
         TRAIN_DATA, TARGET_DATA, tokenizer = self.converted_data()
 
         # запускаем тренировку:
-        history = self.model.fit(TRAIN_DATA, TARGET_DATA, epochs=300, batch_size=32)
+        history = self.model.fit(TRAIN_DATA, TARGET_DATA, epochs=15, batch_size=32)
 
         reverse_word_map = dict(map(reversed, self.converted_data()[2].word_index.items()))
 

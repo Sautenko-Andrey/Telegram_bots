@@ -45,5 +45,5 @@ beer_collection = current_db["beers"]
 #
 #
 #
-# beer_collection.delete_many({})
-beer_collection.insert_many(additional_data)
+beer_collection.delete_many({})
+#beer_collection.insert_many(additional_data)

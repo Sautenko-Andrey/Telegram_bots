@@ -3,19 +3,6 @@ from telebot import types
 from tokens import beer_bot_token as my_token
 
 from beerRNN_executor import ExecutorRNN
-from beer_full_names import *
-from beer_bot_utils import GetBeerData
-
-import pymongo
-
-# #установим соединение с Mongo DB
-# db_client = pymongo.MongoClient("mongodb://localhost:27017/")
-# #подключаемся к БД, если ее нет, то она будет создана
-# current_db = db_client["products_db"]
-# #создаем коллекцию beers
-# beers_collection = current_db["beers"]
-# for item in beers_collection.find():
-#     print(item)
 
 bot = telebot.TeleBot(my_token.token)
 
@@ -73,14 +60,15 @@ def rnn_executor(message):
 
     #получаем предсказание от НС (название пива)
     prediction = ExecutorRNN()
-    result = prediction.identify_item(user_beer_request)
+    pred_result, pred_img = prediction.identify_item(user_beer_request)
 
     #отправляем ответ пользователю для подтверждения
     bot.send_message(message.chat.id, f"Ми знайшли твоє пиво!\n"
-                                      f"Це : {result}")
+                                      f"Це : {pred_result}")
 
     #отправляем пользователю картинку с его пивом
-    open_send_img(message,GetBeerData(result).send_data())
+    #open_send_img(message,GetBeerData(result).send_data())
+    open_send_img(message, pred_img)
 
 
 
