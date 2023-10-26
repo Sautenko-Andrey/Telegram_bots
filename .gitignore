@@ -161,6 +161,10 @@ weather_pics/
 #rnn model
 beer_bot_model_text
 
+mongod.py
+bot_parcer.py
+all_prices_data_gen.py
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
