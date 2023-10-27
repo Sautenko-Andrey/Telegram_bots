@@ -43,16 +43,28 @@ def make_price_pic():
     #create plot
     fig = plt.figure(figsize=(7,4))
     ax = fig.add_subplot()
-    ax.bar(markets, (prices), color = market_colors)
+
+    colors_diff = []
+    for value in prices:
+        if value == min(prices):
+            colors_diff.append("red")
+        else:
+            colors_diff.append("blue")
+
+    ax.bar(markets, (prices), color = colors_diff)
+
+
+
     #ax.set(ylim = (0, max(prices)))
     #ax.set_ylim(ymin = 0, ymax = max(prices))
     ax.yaxis.set_major_locator(MaxNLocator(10))
     ax.yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
     #ax.yaxis.set_major_locator(FixedLocator([0, 10, 20, 30, 50, 75, 100]))
+
     #ax.grid()
     plt.title("Ціни у маркетах, грн")
-    #plt.show()
-    plt.savefig('compared_prices.png')
+    plt.show()
+    #plt.savefig('compared_prices.png')
 
 
 

@@ -9,7 +9,7 @@ from keras_preprocessing.sequence import pad_sequences
 from keras.models import load_model
 
 from beer_bot_utils import *
-from beer_full_names import BeerNames
+
 
 import pymongo
 
