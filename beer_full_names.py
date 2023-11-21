@@ -171,12 +171,13 @@ class BeerNames:
     BEER_LVIVSKE_SVITLE_048_L_JB = 'Пиво Львівське світле 4,3% 0,48 л жб'
     BEER_CARLSBERG_PREMIUM_PILSNER_SVITLE_05_L_JB = 'Пиво Carlsberg Premium Pilsner світле фільтроване з/б 5% 0.5 л жб'
     BEER_CARLSBERG_PILSNER_05_L_JB = 'Пиво Carlsberg Pilsner 0.5 л жб'
+    BEER_DINKELACKER_PRIVAT_05_GLASS = 'Пиво Dinkelacker Privat Світле 0.5 л скло'
 
 
 
 
 all_names = inspect.getmembers(BeerNames)
-all_names = all_names[:170]
+all_names = all_names[:171]
 res = [x[1] for x in all_names]
 
 
