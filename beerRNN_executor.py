@@ -661,5 +661,21 @@ class ExecutorRNN:
             return (
             self.beer_collection.find_one({"id": 170})["name"], self.beer_collection.find_one({"id": 170})["img"],
             self.beer_collection.find_one({"id": 170})["prices"])
+        elif np.argmax(result) == 171:
+            return (
+            self.beer_collection.find_one({"id": 171})["name"], self.beer_collection.find_one({"id": 171})["img"],
+            self.beer_collection.find_one({"id": 171})["prices"])
+        elif np.argmax(result) == 172:
+            return (
+            self.beer_collection.find_one({"id": 172})["name"], self.beer_collection.find_one({"id": 172})["img"],
+            self.beer_collection.find_one({"id": 172})["prices"])
+        elif np.argmax(result) == 173:
+            return (
+            self.beer_collection.find_one({"id": 173})["name"], self.beer_collection.find_one({"id": 173})["img"],
+            self.beer_collection.find_one({"id": 173})["prices"])
+        elif np.argmax(result) == 174:
+            return (
+            self.beer_collection.find_one({"id": 174})["name"], self.beer_collection.find_one({"id": 174})["img"],
+            self.beer_collection.find_one({"id": 174})["prices"])
         else:
             return "Вибач, але я не знайшов твоє пиво..."
