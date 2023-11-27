@@ -25,7 +25,7 @@ class ExecutorRNN:
     beer_collection = current_db["beers"]
 
     # опредедяем количество наиболее употребляемых слов в тексте запроса пользователя
-    MAX_WORDS = 1000
+    MAX_WORDS = 3000
 
     # определяем количество слов, к которому дуте приведен каждый запрос от пользователя
     MAX_LENGTH_TEXT = 10
@@ -677,5 +677,21 @@ class ExecutorRNN:
             return (
             self.beer_collection.find_one({"id": 174})["name"], self.beer_collection.find_one({"id": 174})["img"],
             self.beer_collection.find_one({"id": 174})["prices"])
+        elif np.argmax(result) == 175:
+            return (
+            self.beer_collection.find_one({"id": 175})["name"], self.beer_collection.find_one({"id": 175})["img"],
+            self.beer_collection.find_one({"id": 175})["prices"])
+        elif np.argmax(result) == 176:
+            return (
+            self.beer_collection.find_one({"id": 176})["name"], self.beer_collection.find_one({"id": 176})["img"],
+            self.beer_collection.find_one({"id": 176})["prices"])
+        elif np.argmax(result) == 177:
+            return (
+            self.beer_collection.find_one({"id": 177})["name"], self.beer_collection.find_one({"id": 177})["img"],
+            self.beer_collection.find_one({"id": 177})["prices"])
+        elif np.argmax(result) == 178:
+            return (
+            self.beer_collection.find_one({"id": 178})["name"], self.beer_collection.find_one({"id": 178})["img"],
+            self.beer_collection.find_one({"id": 178})["prices"])
         else:
             return "Вибач, але я не знайшов твоє пиво..."

@@ -43,7 +43,7 @@ class InsertData:
         # Inserting a new item into DB
         self.__beer_collection.insert_one(self.__new_item)
 
-adding = InsertData(id = 174, text = 'beer_SCOTTY_WEST_Dark_Lager_05_jb.txt',
-                    img = "175_scotty_west_dark_lager_05jb.png",
-                    name = 'Пиво 0,568 л SCOTTY WEST Dark Lager темне фільтроване 5%')
+adding = InsertData(id = 178, text = 'beer_varvar_hoppy_lager_sv_nef_033glas.txt',
+                    img = "179_beer_varvar_hoppy_lager033glass.png",
+                    name = 'Пиво «Varvar Hoppy Lager» світле нефільтроване, 0,33л')
 adding()
