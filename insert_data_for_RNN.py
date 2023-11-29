@@ -43,7 +43,8 @@ class InsertData:
         # Inserting a new item into DB
         self.__beer_collection.insert_one(self.__new_item)
 
-adding = InsertData(id = 180, text = 'beer_samuel_smithorganic_chocolate_stout_033gl.txt',
-                    img = "181_samuel_smith_organic_chocolate_temne_033gl.png",
-                    name = 'Пиво Samuel Smith Organic Chocolate Stout темне, 0,355л')
+adding = InsertData(id = 184,
+                    text = 'beer_staropramen_sv_048_jb.txt',
+                    img = "185_beer_staropramen_sv_048_jb.png",
+                    name = 'Пиво Staropramen світле з/б, 0,48л')
 adding()
