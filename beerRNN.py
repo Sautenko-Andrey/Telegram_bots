@@ -13,36 +13,36 @@ import matplotlib.pyplot as plt
 from beer_bot_utils import *
 
 
-
 class RNN_beerBot:
 
     #addding slots for memory safe and get more speed
     __slots__ = ("model")
 
     # опредедяем количество наиболее употребляемых слов в тексте запроса пользователя
-    MAX_WORDS = 3000
+    __MAX_WORDS = 3000
 
     # определяем количество слов, к которому дуте приведен каждый запрос от пользователя
-    MAX_LENGTH_TEXT = 10
+    __MAX_LENGTH_TEXT = 10
 
     # количество продуктов
-    ITEMS_AMOUNT = 185
+    __ITEMS_AMOUNT = 186
 
 
     def __init__(self):
         '''Инициализация модели НС и ее подготовка к обучению'''
 
         self.model = keras.Sequential([
-            Embedding(self.MAX_WORDS, self.ITEMS_AMOUNT, input_length=self.MAX_LENGTH_TEXT),
-            LSTM(self.ITEMS_AMOUNT, return_sequences=True),
-            LSTM(self.ITEMS_AMOUNT),
-            Dense(self.ITEMS_AMOUNT, activation='softmax')
+            Embedding(self.__MAX_WORDS, self.__ITEMS_AMOUNT, input_length=self.__MAX_LENGTH_TEXT),
+            LSTM(self.__ITEMS_AMOUNT, return_sequences=True),
+            LSTM(self.__ITEMS_AMOUNT),
+            Dense(self.__ITEMS_AMOUNT, activation='softmax')
         ])
 
         self.model.compile(optimizer=Adam(0.0001), loss='categorical_crossentropy',
                            metrics=['accuracy'])
 
-    def training_NN(self):
+    def training_NN(self) -> tuple:
+
         '''Метод обучения НС'''
 
         # загружаем подготовленные данные для обучения:
@@ -62,21 +62,21 @@ class RNN_beerBot:
 
         return history, reverse_word_map
 
-    def upload_data(self):
+    def upload_data(self) -> tuple:
         """Функция загрузки обучающей выборки для каждой позиции товара"""
 
         # создаем єкземпляр класса RefersForRNN:
         all_text_data = RefersForRNN()
         return all_text_data.get_text_from_DB()
 
-    def converted_data(self):
+    def converted_data(self) -> tuple:
         '''Подготовка обучающих данных'''
 
         # загружаем общую папку с текстами для обработки:
         texts = self.upload_data()[0]
 
         # создаем необходимый нам токенайзер:
-        tokenizer = Tokenizer(num_words=self.MAX_WORDS,
+        tokenizer = Tokenizer(num_words=self.__MAX_WORDS,
                               filters='!"-#$%amp;()*+-/:;<=>?@[\\]^_`{|}~\t\n\r',
                               lower=True, split=' ', char_level=False)
 
@@ -88,11 +88,11 @@ class RNN_beerBot:
         data = tokenizer.texts_to_sequences(texts)
 
         # короткие тексты дополняем нулями, а длинные урезаем до 10 слов:
-        data_pad = pad_sequences(data, maxlen=self.MAX_LENGTH_TEXT)
+        data_pad = pad_sequences(data, maxlen=self.__MAX_LENGTH_TEXT)
 
         # окончательно формируем обучающую выборку:
         TRAIN_SAMPLE = data_pad
-        items = self.ITEMS_AMOUNT
+        items = self.__ITEMS_AMOUNT
 
         result = []
         for i in range(items):
@@ -114,13 +114,13 @@ class RNN_beerBot:
 
         return TRAIN_SAMPLE, TARGET_SAMPLE, tokenizer
 
-    def index_convert_to_text(self, indeces_list):
+    def index_convert_to_text(self, indeces_list:list) -> list:
         '''Метод для преобразования индексов в слова'''
         reverse_word_map = self.training_NN()[1]
         normal_text = [reverse_word_map.get(x) for x in indeces_list]
-        return (normal_text)
+        return normal_text
 
-    def defining_item(self, user_text):
+    def defining_item(self, user_text:str) -> None:
         '''Метод определения товара по тексту, который запрашивает пользователь '''
 
         # переводим пользовательский запрос в нижний регистр:
@@ -134,7 +134,7 @@ class RNN_beerBot:
 
         # преобразовываем в вектор нужной длины,
         # дополняя нулями или сокращая до 10 слов в тексте
-        data_pad = pad_sequences(data, maxlen=self.MAX_LENGTH_TEXT)
+        data_pad = pad_sequences(data, maxlen=self.__MAX_LENGTH_TEXT)
 
         # смотрим какую на самом деле фразу мы анализируем(т.к. некоторых слов у нас может не быть в словаре)
         print(self.index_convert_to_text(data[0]))
@@ -143,7 +143,7 @@ class RNN_beerBot:
         result = self.model.predict(data_pad)
         print(result, np.argmax(result), sep='\n')
 
-    def get_grafic(self, history_dict: dict):
+    def get_grafic(self, history_dict: dict) -> None:
         accuracy = history_dict["accuracy"]
         loss = history_dict["loss"]
         epochs = range(1, len(accuracy) + 1)

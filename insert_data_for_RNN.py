@@ -1,5 +1,6 @@
 import pymongo
 
+
 class InsertData:
     '''Opens DB and inserts a new item inside.'''
 
@@ -13,7 +14,7 @@ class InsertData:
     __beer_collection = __current_db["beers"]
 
     @classmethod
-    def __check_args(cls, id, text, img, name):
+    def __check_args(cls, id, text, img, name) -> None:
         '''Checks arguments of instance of the class InsertData'''
 
         if type(id) != int:
@@ -43,8 +44,8 @@ class InsertData:
         # Inserting a new item into DB
         self.__beer_collection.insert_one(self.__new_item)
 
-adding = InsertData(id = 184,
-                    text = 'beer_staropramen_sv_048_jb.txt',
-                    img = "185_beer_staropramen_sv_048_jb.png",
-                    name = 'Пиво Staropramen світле з/б, 0,48л')
+adding = InsertData(id = 185,
+                    text = 'beer_staropramen_sv_nefilter_05_jb.txt',
+                    img = "186_staropramen_svitle_nef_05jb.png",
+                    name = 'Пиво Staropramen Nefiltr світле нефільтроване з/б, 0,5л')
 adding()
