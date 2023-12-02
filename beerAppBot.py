@@ -57,8 +57,11 @@ def request_executor(call):
 def open_send_img(message, path):
     """Метод открывает и отправляет изображения пользователю"""
 
-    with open(path, "rb") as file:
-        bot.send_photo(message.chat.id, file)
+    try:
+        with open(path, "rb") as file:
+            bot.send_photo(message.chat.id, file)
+    except Exception as ex:
+        print(f"Error while opening beer image: {ex}")
 
 
 def rnn_executor(message):

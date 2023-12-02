@@ -44,8 +44,10 @@ class InsertData:
         # Inserting a new item into DB
         self.__beer_collection.insert_one(self.__new_item)
 
+head_path = "../beerBot_DATA/pics/all_beers/"
+
 adding = InsertData(id = 189,
                     text = 'beer_kurpfalz_brau_helles_sv_05_gl.txt',
-                    img = "190_kupfalz_brau_helles_sv_05_gl.png",
+                    img = f"{head_path}190_kupfalz_brau_helles_sv_05_gl.png",
                     name = 'Пиво Kurpfalz Brau Helles світле, 0,5л')
 adding()

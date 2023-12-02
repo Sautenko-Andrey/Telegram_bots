@@ -49,7 +49,7 @@ class RNN_beerBot:
         TRAIN_DATA, TARGET_DATA, tokenizer = self.converted_data()
 
         # запускаем тренировку:
-        history = self.model.fit(TRAIN_DATA, TARGET_DATA, epochs=15, batch_size=32)   #15 epochs enough
+        history = self.model.fit(TRAIN_DATA, TARGET_DATA, epochs=8, batch_size=32)   #8 epochs enough
 
         reverse_word_map = dict(map(reversed, self.converted_data()[2].word_index.items()))
 
