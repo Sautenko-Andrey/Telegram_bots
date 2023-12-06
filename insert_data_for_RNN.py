@@ -46,8 +46,8 @@ class InsertData:
 
 head_path = "../beerBot_DATA/pics/all_beers/"
 
-adding = InsertData(id = 200,
-                    text = 'beer_obolon_beermix_hard_grapefruit_05jb.txt',
-                    img = f"{head_path}201_obolon_beermix_hard_grapefruit_05jb.png",
-                    name = "Пиво Оболонь Beermix Hard грейпфрут н/ф з/б, 0,5л")
+adding = InsertData(id = 206,
+                    text = 'beer_leffe_ruby_033glass.txt',
+                    img = f"{head_path}207_beer_leffe_ruby_033_glass.png",
+                    name = "Пиво Leffe Ruby, світле 0,33 л")
 adding()

@@ -5,6 +5,8 @@ from tokens import beer_bot_token as my_token
 from beerRNN_executor import ExecutorRNN
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator, FormatStrFormatter
+import psycopg2 as psy
+from config import psw, db, user_name, host
 
 bot = telebot.TeleBot(my_token.token)
 
@@ -12,6 +14,36 @@ bot = telebot.TeleBot(my_token.token)
 @bot.message_handler(commands=["start", "hello", "hey", "привет"])
 def start_Bot(message):
     """Обработчик команды /start"""
+
+    #launch and open a DB
+    connection = None
+
+    try:
+        # Connect to DB
+        connection = psy.connect(
+            host=host,
+            user=user_name,
+            password=psw,
+            database=db
+        )
+
+        connection.autocommit = True
+
+        # creating a table
+        with connection.cursor() as cursor:
+            cursor.execute("CREATE TABLE IF NOT EXISTS bot_users("
+                           "user_id serial PRIMARY KEY,"
+                           "telegram_user_id text NOT NULL,"
+                           "user_name text NOT NULL,"
+                           "user_query text,"
+                           "query_date timestamptz DEFAULT current_timestamp);")
+
+    except Exception as ex:
+        print("Error while open and creating the bot_users DB", ex)
+    finally:
+        if connection:
+            connection.close()
+            #print("Database has been successfully created.")
 
     # пропишем две кнопки поиска
     markup = types.InlineKeyboardMarkup(row_width=2)
@@ -70,6 +102,33 @@ def rnn_executor(message):
     # получаем запрос пользователя на пиво
 
     user_beer_request = message.text.strip()
+
+    # opening DB and inserting user's query
+    connection = None
+
+    try:
+        # Connect to DB
+        connection = psy.connect(
+            host=host,
+            user=user_name,
+            password=psw,
+            database=db
+        )
+
+        connection.autocommit = True
+
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO bot_users(telegram_user_id, user_name, user_query)"
+                           "VALUES"
+                           "('%s','%s','%s')" % (message.from_user.id,message.from_user.first_name,user_beer_request))
+
+    except Exception as ex:
+        print("Error while inserting user's query into DB", ex)
+    finally:
+        if connection:
+            connection.close()
+            #print("User's query has been successfully inserted into DB")
+
 
     bot.send_message(message.chat.id, f"Запит на пошук 📍<b>{user_beer_request}</b>📍 прийнят.\nПочинаємо пошук!",
                      parse_mode="html")

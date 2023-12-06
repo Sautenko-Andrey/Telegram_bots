@@ -164,6 +164,8 @@ beer_bot_model_text
 mongod.py
 bot_parcer.py
 all_prices_data_gen.py
+config.py
+customers.py
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

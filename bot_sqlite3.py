@@ -38,7 +38,7 @@ def start_method(message):
     bot.register_next_step_handler(message, get_name)
 
 def get_name(message):
-    '''В этой функции получаем тот текст, которыйвводит пользователь,
+    '''В этой функции получаем тот текст, который вводит пользователь,
     и этот текс мы будем записывать в переменную name'''
     global name
     name = message.text.strip()   #удалим все возможные пробелы до и после текста
