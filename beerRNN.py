@@ -25,7 +25,7 @@ class RNN_beerBot:
     __MAX_LENGTH_TEXT = 10
 
     # количество продуктов
-    __ITEMS_AMOUNT = 207
+    __ITEMS_AMOUNT = 218
 
 
     def __init__(self):
