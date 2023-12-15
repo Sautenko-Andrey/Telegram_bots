@@ -16,7 +16,7 @@ from beer_bot_utils import *
 class RNN_beerBot:
 
     #addding slots for memory safe and get more speed
-    __slots__ = ("model")
+    __slots__ = ("model",)
 
     # опредедяем количество наиболее употребляемых слов в тексте запроса пользователя
     __MAX_WORDS = 3000
@@ -25,7 +25,7 @@ class RNN_beerBot:
     __MAX_LENGTH_TEXT = 10
 
     # количество продуктов
-    __ITEMS_AMOUNT = 218
+    __ITEMS_AMOUNT = 235
 
 
     def __init__(self):
